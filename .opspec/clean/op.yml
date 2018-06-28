@@ -1,0 +1,13 @@
+name: clean
+description: cleans the project
+inputs:
+  srcDir:
+    dir:
+      default: .
+      description: directory containing the source code
+run:
+  op:
+    pkg: { ref: github.com/opspec-pkgs/git.clean#1.1.0 }
+    inputs: 
+      srcDir:
+      opts: '-ffXd -e !.vscode/'

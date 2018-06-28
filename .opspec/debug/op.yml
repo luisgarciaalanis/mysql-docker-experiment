@@ -1,0 +1,37 @@
+name: debug
+description: runs test app
+inputs:
+  DB_PASSWORD:
+    string:
+      constraints: { minLength: 1 }
+      description: DB password
+      isSecret: true
+  DB_HOST:
+    string:
+      constraints: { minLength: 1 }
+      default: testDB
+      description: DB host
+  DB_NAME:
+    string:
+      constraints: { minLength: 1 }
+      default: testDB
+      description: DB database name
+  srcDir:
+    dir:
+      default: .
+run:
+  serial:
+    - op:
+        pkg: { ref: init }
+        inputs: { srcDir }
+    - container:
+        image: { ref: 'node:10.5.0-alpine' }
+        dirs:
+          /src: $(srcDir)
+        workDir: /src
+        cmd: [ 'node', 'app/app.js' ]
+        envVars: 
+          DB_PASSWORD: $(DB_PASSWORD)
+          DB_HOST: $(DB_HOST)
+          DB_NAME: $(DB_NAME)
+

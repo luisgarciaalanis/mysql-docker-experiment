@@ -4,24 +4,24 @@ inputs:
   DB_PASSWORD:
     string:
       description: password to connect to the database
-  TEST_MYSQL_DATABASE_NAME:
+  DB_NAME:
     string:
       description: name of the database to be created
-      default: testdb
+      default: testDB
   dbDataDir:
     dir:
       default: './data'
   mysqlCnf:
-      file:
-        default: /mysqld_settings.cnf
+    file:
+      default: /mysqld_settings.cnf
 run:
   container:
-    image: { ref: 'mysql:5.7.22' }
+    image: { ref: 'mysql:5.7' }
     name: testDB
     files:
       /etc/mysql/conf.d/mysqld_settings.cnf: $(mysqlCnf)
     dirs: { '/var/lib/mysql': $(dbDataDir) }
     envVars:
       MYSQL_ROOT_PASSWORD: $(DB_PASSWORD)
-      MYSQL_DATABASE: $(TEST_MYSQL_DATABASE_NAME)
+      MYSQL_DATABASE: $(DB_NAME)
     ports: { '3306':'3306' }

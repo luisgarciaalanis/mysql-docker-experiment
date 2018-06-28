@@ -1,0 +1,14 @@
+name: init
+description: inits app
+inputs:
+  srcDir:
+    dir:
+      default: .
+      description: src folder
+run:
+  container:
+    dirs:
+      /src: $(srcDir)
+    workDir: /src
+    image: { ref: 'node:10.5.0-alpine' }
+    cmd: [ 'npm', 'install']

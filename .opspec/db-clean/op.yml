@@ -1,13 +1,15 @@
-name: db-destroy
+name: db-clean
 description: 'destroys mysql database data, WARNING: make sure database is not running'
 inputs:
-  dbDataDir:
+  srcDir:
     dir:
-      default: './data'
+      default: .
 run:
   container:
     image: { ref: 'alpine:3.7' }
-    dirs: { '/data': $(dbDataDir) }
+    dirs: 
+      /src: $(srcDir)
+    workDir: /src
     files:
       /delete-data.sh:
     cmd: ['/delete-data.sh']

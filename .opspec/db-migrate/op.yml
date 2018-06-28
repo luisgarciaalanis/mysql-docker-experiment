@@ -1,0 +1,13 @@
+name: db-migrate
+description: 'migrates the db schema'
+inputs:
+  srcDir:
+    dir:
+      default: .
+run:
+  container:
+    image: { ref: 'alpine:3.7' }
+    dirs: 
+      '/src': $(srcDir)
+    cmd: [ '/init-data.sh']
+    workDir: /src
